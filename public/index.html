@@ -1,0 +1,26 @@
+<html>
+<head>
+	<script src="/js/jquery/jquery.js"></script>
+	<script data-main="js/app" src="/js/requirejs/require.js"></script>
+	<link rel="stylesheet" href="/js/codemirror/lib/codemirror.css" type="text/css" />
+	<style>
+	.column {
+		height: 100%;
+		display: inline-block;
+		width: 420px;
+	}
+	.code-editor {
+		border: solid black 1px;
+		width: 400px;
+		height: 300px;
+	}
+	</style>
+</head>
+<body>
+	<div class="column">
+		<div id="main_editor" class="code-editor"></div>
+	</div>
+	<div class="column" id="secondary">
+	</div>
+</body>
+</html>
