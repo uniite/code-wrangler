@@ -1,8 +1,13 @@
 require 'parser/current'
 
 class Indexer
+
+  attr_reader :index
+
+
   def initialize
     @paths = []
+    @index = {}
   end
 
   def add(path)
@@ -12,7 +17,11 @@ class Indexer
   def reload
     @paths.each do |p|
       ast = Parser::CurrentRuby.parse(File.read(p))
-      puts ast_to_symbols(ast).inspect
+      ast_to_symbols(ast).each do |s|
+        s[:path] = p
+        @index[s[:name].to_s] ||= []
+        @index[s[:name].to_s] << s
+      end
     end
   end
 
@@ -41,11 +50,6 @@ class Indexer
           symbols += ast.children[1..-1].map { |c| ast_to_symbols(c) }
         end
     end
-    symbols.select { |s| s.flatten.size > 0 }
+    symbols.select { |s| s.flatten.size > 0 }.flatten
   end
 end
-
-
-idx = Indexer.new()
-idx.add(ARGV.first)
-idx.reload
